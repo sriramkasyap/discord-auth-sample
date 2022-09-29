@@ -33,7 +33,7 @@ const CallbackPage = () => {
         setUser(user);
         navigate("/profile");
       });
-  }, [navigate, params, setUser]);
+  }, []);
 
   return (
     <header className="App-header">
