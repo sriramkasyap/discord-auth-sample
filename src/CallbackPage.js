@@ -28,9 +28,10 @@ const CallbackPage = () => {
       }),
     })
       .then((res) => res.json())
-      .then(({ user }) => {
-        // console.log(user);
-        setUser(user);
+      .then(({ discord_user, eden_user, token }) => {
+        console.log({ discord_user, eden_user, token });
+        localStorage.setItem("eden_token", token);
+        setUser({ discord_user, eden_user });
         navigate("/profile");
       });
   }, []);

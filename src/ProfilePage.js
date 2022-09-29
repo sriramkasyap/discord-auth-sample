@@ -12,13 +12,14 @@ const ProfilePage = () => {
     }
   }, [user, navigate]);
   return (
-    user && (
+    user &&
+    user.discord_user && (
       <header className="App-header">
         <img
-          src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}`}
+          src={`https://cdn.discordapp.com/avatars/${user.discord_user.id}/${user.discord_user.avatar}`}
           alt="avatar"
         />
-        <p>Welcome, {user.username}</p>
+        <p>Welcome, {user.discord_user.username}</p>
         <button
           onClick={() => {
             setUser(null);
