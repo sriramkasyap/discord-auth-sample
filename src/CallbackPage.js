@@ -24,7 +24,7 @@ const CallbackPage = () => {
       },
       body: JSON.stringify({
         code,
-        redirect_uri: "http://localhost:3000/callback",
+        redirect_uri: process.env.REACT_APP_CALLBACK_URL,
       }),
     })
       .then((res) => res.json())

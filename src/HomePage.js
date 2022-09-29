@@ -5,7 +5,7 @@ const HomePage = () => {
   let queryParams = useMemo(() => {
     return new URLSearchParams();
   }, []);
-  queryParams.append("redirect_uri", "http://localhost:3000/callback");
+  queryParams.append("redirect_uri", process.env.REACT_APP_CALLBACK_URL);
 
   useEffect(() => {
     fetch(
