@@ -5,7 +5,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "./HomePage";
-import LoginPage from "./LoginPage";
+import CallbackPage from "./CallbackPage";
+import ProfilePage from "./ProfilePage";
 
 const router = createBrowserRouter([
   {
@@ -17,10 +18,18 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "login",
+    path: "callback",
     element: (
       <App>
-        <LoginPage />
+        <CallbackPage />
+      </App>
+    ),
+  },
+  {
+    path: "profile",
+    element: (
+      <App>
+        <ProfilePage />
       </App>
     ),
   },
