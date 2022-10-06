@@ -13,8 +13,7 @@ const CallbackPage = () => {
   useEffect(() => {
     let code = params.get("code");
     if (!code) {
-      navigate("/");
-      return;
+      return navigate("/");
     }
 
     fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
@@ -31,8 +30,8 @@ const CallbackPage = () => {
       .then(({ discord_user, eden_user, token }) => {
         console.log({ discord_user, eden_user, token });
         localStorage.setItem("eden_token", token);
-        setUser({ discord_user, eden_user });
-        navigate("/profile");
+        setUser({ discord_user, eden_user, token });
+        return navigate("/profile");
       });
   }, []);
 
