@@ -1,38 +1,28 @@
 import { useContext, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router";
 import { context } from "./App";
 import logo from "./logo.svg";
 
 const CallbackPage = () => {
-  let [params] = useSearchParams();
-
-  const { setUser } = useContext(context);
+  let loaderData = useLoaderData();
+  const { setUser, user } = useContext(context);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    let code = params.get("code");
-    if (!code) {
-      return navigate("/");
-    }
+    if (
+      loaderData &&
+      loaderData.discord_user &&
+      loaderData.eden_user &&
+      loaderData.token &&
+      !user
+    ) {
+      console.log({ loaderData });
+      let { discord_user, eden_user, token } = loaderData;
+      setUser({ discord_user, eden_user, token });
 
-    fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        code,
-        redirect_uri: process.env.REACT_APP_CALLBACK_URL,
-      }),
-    })
-      .then((res) => res.json())
-      .then(({ discord_user, eden_user, token }) => {
-        console.log({ discord_user, eden_user, token });
-        localStorage.setItem("eden_token", token);
-        setUser({ discord_user, eden_user, token });
-        return navigate("/profile");
-      });
+      return navigate("/profile");
+    }
   }, []);
 
   return (

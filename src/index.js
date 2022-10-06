@@ -18,18 +18,40 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "callback",
-    element: (
-      <App>
-        <CallbackPage />
-      </App>
-    ),
-  },
-  {
     path: "profile",
     element: (
       <App>
         <ProfilePage />
+      </App>
+    ),
+  },
+  {
+    path: "callback",
+    loader: async ({ request }) => {
+      const url = new URL(request.url);
+      const code = url.searchParams.get("code");
+      console.log({ code });
+
+      return fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          code,
+          redirect_uri: process.env.REACT_APP_CALLBACK_URL,
+        }),
+      })
+        .then((res) => res.json())
+        .then(({ discord_user, eden_user, token }) => {
+          console.log({ discord_user, eden_user, token });
+          localStorage.setItem("eden_token", token);
+          return { discord_user, eden_user, token };
+        });
+    },
+    element: (
+      <App>
+        <CallbackPage />
       </App>
     ),
   },
